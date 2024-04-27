@@ -21,11 +21,10 @@ export default  async function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
       <Provider session={session}>
-
-        <TopBar /> 
-
+        <header>
+          <TopBar /> 
+        </header>
         {children}
-      
       </Provider>
         
       </body>

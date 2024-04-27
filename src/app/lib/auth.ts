@@ -1,6 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
+import { UserInfo } from "@/app/types/user";
+import prisma from "@/app/lib/db";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -26,11 +28,41 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  
   callbacks: {
-     session: async ({ session, token }) => {
-      return token
+    session: async ({ session, token }) => {
+      const res = await prisma.user.upsert({
+        where: {
+          sub: token.sub
+        },
+        update: {
+          // 使用token中的数据
+          username: token.name,
+          avatar: token.picture,
+          email: token.email
+        },
+        create: {
+          // 使用token中的数据 
+          sub: token.sub,
+          username: token.name,
+          avatar: token.picture,
+          email: token.email,
+          platform: 'google',
+        }
+      })
+      if (res) {
+        session.user = {
+          sub: res.sub,
+          platform: res.platform,
+          username: res.username,
+          avatar: res.avatar,
+          email: res.email,
+        } as UserInfo
+      }
+      return session
     }
   },
+
   secret: process.env.AUTH_SECRET
 }
 

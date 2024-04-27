@@ -16,9 +16,10 @@ datasource db {
 
 model User {
   id       Int      @id @default(autoincrement())
+  sub      String   @unique
+  platform String
   username String
   email    String   @unique
-  password String
   role     String   @default("user")
   avatar   String?  @default("/default-avatar.jpg")
   images   Image[]  @relation("UserImages")

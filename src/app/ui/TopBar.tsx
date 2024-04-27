@@ -21,6 +21,7 @@ export default function TopBar() {
   };
 
   return (
+    
     <div className="px-4 sm:px-6 lg:px-8 ">
     <div className="flex items-center justify-between border-b border-zinc-100 py-3">
       <div className="flex items-center gap-4">
@@ -31,9 +32,9 @@ export default function TopBar() {
           className="h-9 w-9"
           alt="this is icon"
         />
-        <span className="hidden md:inline-flex font-brand text-orange-500 ">
+        <Link href="/" className="hidden md:inline-flex font-brand text-orange-500 ">
           Magicsticker
-        </span>
+        </Link>
         <a
           href="https://github.com/twmtest/summer-01"
           className="font-brand hidden md:inline-flex"
@@ -52,7 +53,7 @@ export default function TopBar() {
                 <div className="flex items-center gap-2">
                   <Menu.Button className="rounded-full focus:outline-none focus:ring">
                     <Image
-                      src={session.picture}
+                      src={session.user.avatar}
                       width={36}
                       height={36}
                       className="rounded-full cursor-pointer"
@@ -61,10 +62,10 @@ export default function TopBar() {
                   </Menu.Button>
                   <div>
                     <div className="text-sm font-medium text-gray-800">
-                      {session.name}
+                      {session.user.username}
                     </div>
                     <div className="text-xs text-gray-600">
-                      {session.email}
+                      {session.user.email}
                     </div>
                   </div>
                 </div>
