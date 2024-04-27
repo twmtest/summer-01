@@ -39,7 +39,7 @@ export default function TopBar() {
           href="https://github.com/twmtest/summer-01"
           className="font-brand hidden md:inline-flex"
         >
-          Go to TWM's GitHub warehouse
+          Go to TWM&apos;s GitHub warehouse
         </a>
       </div>
       <div className="font-brand flex items-center gap-4">

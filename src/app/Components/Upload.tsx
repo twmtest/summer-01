@@ -38,7 +38,12 @@ const UploadImage = () => {
                 </>
             ) : (
                 <div className="max-w-40 max-h-40">
-                    <img src={selectedImage} alt="Uploaded" className="w-full h-full rounded-lg" />
+                    <Image
+                        src={selectedImage}
+                        alt="Uploaded"
+                        width={40}
+                        height={40}
+                      />  
                 </div>
             )}
             {loading && !stickerImage && <Spinner />}
