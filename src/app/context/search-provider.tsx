@@ -1,12 +1,21 @@
 // @/app/context/context/search-provider.tsx
 'use client'
-import { createContext, useState } from 'react';
+import { ReactNode, createContext, useState } from 'react';
 
-export const SearchContext = createContext(null);
 
-export default function SearchProvider({ children }) {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [stickerImage,setStickerImage] = useState(null);
+
+export const SearchContext = createContext({
+    selectedImage: "",
+    setSelectedImage: (image: string) => {},
+    stickerImage: "",
+    setStickerImage: (image: string) => {},
+    loading: false,
+    setLoading: (loading:boolean) => {}
+});
+
+export default function SearchProvider({ children }: { children: ReactNode }) {
+    const [selectedImage, setSelectedImage] = useState("");
+    const [stickerImage,setStickerImage] = useState("");
     const [loading,setLoading] = useState(false)
     return (
         <SearchContext.Provider value={{ selectedImage, setSelectedImage,stickerImage,setStickerImage,loading,setLoading }}>

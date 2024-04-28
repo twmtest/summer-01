@@ -9,19 +9,21 @@ import Spinner from './Spinner';
 const UploadImage = () => {
     const { selectedImage, setSelectedImage, stickerImage, setStickerImage, loading, setLoading } = useContext(SearchContext);
     
-    const handleFileInputChange = (e) => {
-        setStickerImage(null);
+    const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStickerImage("");
         setLoading(false);
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const dataURL = reader.result;
-          setSelectedImage(dataURL); // 将 Data URL 设置为状态
-          
-          e.target.value = null;
-        };
-        reader.readAsDataURL(file);
+        const file = e.target.files?.[0]; // 使用可选链操作符 ?. 来安全地访问属性
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const dataURL = reader.result as string;
+                setSelectedImage(dataURL); // 将 Data URL 设置为状态
+                e.target.value = "";
+            };
+            reader.readAsDataURL(file);
+        }
     };
+    
 
     return (
         <div className="flex flex-col items-center justify-center h-64 w-2/5 mt-10">

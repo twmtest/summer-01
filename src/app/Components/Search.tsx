@@ -7,24 +7,24 @@ import { SearchContext } from '../context/search-provider';
 const Search = () => {
     const [inputValue, setInputValue] = useState('');
     const { selectedImage, setSelectedImage,stickerImage,setStickerImage,loading,setLoading  } = useContext(SearchContext);
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // 处理提交逻辑
         MakeSticker();
     };
 
-    const uploadImage = async (image) => {
+    const uploadImage = async (image:string) => {
         if (image) {
             try {
                 
                 const response = await axios.post('http://localhost:5000/uploadImage', { image });
                 console.log('Image uploaded successfully:', response.data.result);
                
-            } catch (error) {
+            } catch (error:any) {
                 console.error('Error uploading image:', error.response.data);
             }
         } else {
@@ -45,7 +45,7 @@ const Search = () => {
             }
             setLoading(true);
             setInputValue('');
-            setSelectedImage(null);
+            setSelectedImage("");
             
             const makestickerresponse = await axios.post('http://localhost:5000/makesticker', { image, prompt });
 
