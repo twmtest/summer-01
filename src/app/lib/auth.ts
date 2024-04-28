@@ -33,23 +33,24 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       const res = await prisma.user.upsert({
         where: {
-          sub: token.sub
+          sub: token.sub as string // 使用类型断言确保 token.sub 是 string 类型
         },
         update: {
           // 使用token中的数据
-          username: token.name,
-          avatar: token.picture,
-          email: token.email
+          username: token.name as string, // 使用类型断言确保 token.name 是 string 类型
+          avatar: token.picture as string, // 使用类型断言确保 token.picture 是 string 类型
+          email: token.email as string // 使用类型断言确保 token.email 是 string 类型
         },
         create: {
           // 使用token中的数据 
-          sub: token.sub,
-          username: token.name,
-          avatar: token.picture,
-          email: token.email,
+          sub: token.sub as string, // 使用类型断言确保 token.sub 是 string 类型
+          username: token.name as string, // 使用类型断言确保 token.name 是 string 类型
+          avatar: token.picture as string, // 使用类型断言确保 token.picture 是 string 类型
+          email: token.email as string, // 使用类型断言确保 token.email 是 string 类型
           platform: 'google',
         }
-      })
+      });
+    
       if (res) {
         session.user = {
           sub: res.sub,
@@ -57,10 +58,11 @@ export const authOptions: NextAuthOptions = {
           username: res.username,
           avatar: res.avatar,
           email: res.email,
-        } as UserInfo
+        } as UserInfo;
       }
-      return session
+      return session;
     }
+    
   },
 
   secret: process.env.AUTH_SECRET
