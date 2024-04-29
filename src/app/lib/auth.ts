@@ -28,6 +28,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  secret: 'e5ddbf77ab7396fda3cd9cc62a047404',
   
   callbacks: {
     session: async ({ session, token }) => {
@@ -65,7 +66,7 @@ export const authOptions: NextAuthOptions = {
     
   },
 
-  secret: process.env.NEXTAUTH_SECRET
+  
 }
 
 export default NextAuth(authOptions)
