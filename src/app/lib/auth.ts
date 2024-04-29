@@ -28,8 +28,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_SECRET,
-
+  
   callbacks: {
     session: async ({ session, token }) => {
       const res = await prisma.user.upsert({
@@ -66,7 +65,7 @@ export const authOptions: NextAuthOptions = {
     
   },
 
-  
+  secret: process.env.NEXTAUTH_SECRET
 }
 
 export default NextAuth(authOptions)
