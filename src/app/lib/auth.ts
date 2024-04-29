@@ -28,8 +28,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: 'e5ddbf77ab7396fda3cd9cc62a047404',
-  
+  secret: process.env.NEXT_PUBLIC_SECRET,
+
   callbacks: {
     session: async ({ session, token }) => {
       const res = await prisma.user.upsert({
