@@ -53,11 +53,11 @@ export const authOptions: NextAuthOptions = {
     
       if (res) {
         session.user = {
-          sub: res.sub,
-          platform: res.platform,
-          username: res.username,
-          avatar: res.avatar,
-          email: res.email,
+          sub: res?.sub,
+          platform: res?.platform,
+          name: res?.username,
+          image: res?.avatar,
+          email: res?.email,
         } as UserInfo;
       }
       return session;

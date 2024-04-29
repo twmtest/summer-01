@@ -1,7 +1,7 @@
 export interface UserInfo {
-    sub: string;
-    username: string;
-    avatar: string;
-    platform: string;
-    email: string;
+    sub: string | null;
+    name: string | null;
+    image: string | null;
+    platform: string | null;
+    email: string | null;
   }

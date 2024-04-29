@@ -2,12 +2,11 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { Menu } from '@headlessui/react';
-import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import {UserInfo} from '@/app/types/user'
 export default function TopBar() {
-  const { data: session, status } = useSession();
+  const { data:session , status } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
 
    
@@ -50,25 +49,28 @@ export default function TopBar() {
           <Menu as="div" className="relative">
             {({ open }) => (
               <>
-                <div className="flex items-center gap-2">
-                  <Menu.Button className="rounded-full focus:outline-none focus:ring">
-                    <Image
-                      src={session.user.avatar}
-                      width={36}
-                      height={36}
-                      className="rounded-full cursor-pointer"
-                      alt="User Avatar"
-                    />
-                  </Menu.Button>
-                  <div>
-                    <div className="text-sm font-medium text-gray-800">
-                      {session.user.username}
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      {session.user.email}
-                    </div>
+              {session?.user &&
+                (<div className="flex items-center gap-2">
+                <Menu.Button className="rounded-full focus:outline-none focus:ring">
+                  <Image
+                    src={session.user?.image || ""}
+                    width={36}
+                    height={36}
+                    className="rounded-full cursor-pointer"
+                    alt="User Avatar"
+                  />
+                </Menu.Button>
+                <div>
+                  <div className="text-sm font-medium text-gray-800">
+                    {session.user.name}
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {session.user.email}
                   </div>
                 </div>
+              </div>)
+              }
+                
                 <Menu.Items
                   className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
