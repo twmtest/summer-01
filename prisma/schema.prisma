@@ -24,16 +24,17 @@ model User {
   avatar   String?  @default("/default-avatar.jpg")
   images   Image[]  @relation("UserImages")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  
 }
 
 model Image {
   id         Int      @id @default(autoincrement())
-  userId     Int
-  user       User     @relation("UserImages", fields: [userId], references: [id])
+  userId     String   
+  user       User     @relation("UserImages", fields: [userId], references: [sub])
   imageUrl   String
+  imageName  String?
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+ 
 }
 
 

@@ -3,8 +3,12 @@ import { useState, useContext } from 'react';
 import Image from "next/image";
 import axios from 'axios';
 import { SearchContext } from '../context/search-provider';
+import prisma from "@/app/lib/db";
+import { useSession } from 'next-auth/react';
+
 
 const Search = () => {
+    const { data:session , status } = useSession();
     const [inputValue, setInputValue] = useState('');
     const { selectedImage, setSelectedImage,stickerImage,setStickerImage,loading,setLoading  } = useContext(SearchContext);
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,17 +24,41 @@ const Search = () => {
     const uploadImage = async (image:string) => {
         if (image) {
             try {
-                
-                const response = await axios.post('http://localhost:5000/uploadImage', { image });
-                console.log('Image uploaded successfully:', response.data.result);
-               
+                const response1 = await axios.post('http://localhost:5000/uploadImage', { image });
+                console.log('Image uploaded successfully:', response1.data.result);
+                const {filename, uploaded, variants } = response1.data.result;
+                if (session?.user && session.user?.sub && response1.data.result) {
+                    
+                    const userId = session.user.sub;
+                   
+                    
+                    const res = await fetch(`/api/UploadImage`, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            userId,
+                            filename,
+                            uploaded,
+                            variants
+                        }),
+                      });
+                    
+                   
+                    console.log('Image data inserted successfully:', res);
+                } else {
+                    console.error('User not authenticated');
+                }
             } catch (error:any) {
-                console.error('Error uploading image:', error.response.data);
+                console.error('Error uploading image:', error);
             }
         } else {
             console.error('No image selected');
         }
     };
+    
+    
 
     const MakeSticker = async () => {
         try {
