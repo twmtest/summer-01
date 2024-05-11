@@ -1,6 +1,5 @@
 import prisma from "@/app/lib/db";
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { UploadRequest } from "@/app/types/uploadDatabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
@@ -21,5 +20,20 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     } catch (error) {
         console.error('Error uploading image:', error);
         
+    }
+}
+
+export async function GET(req: NextRequest, res: NextApiResponse){
+    try{
+       const images = await prisma.image.findMany({
+        select: {
+            imageUrl: true,
+            imageName: true,
+          },
+       })
+       
+       return NextResponse.json({ images });
+    }catch(error){
+        console.log('Error get image',error)
     }
 }

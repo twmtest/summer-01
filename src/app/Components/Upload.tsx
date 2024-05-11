@@ -1,5 +1,4 @@
 // @/app/Components/Upload.tsx
-'use client'
 import { useContext } from 'react';
 import Image from "next/image";
 import axios from 'axios';
@@ -12,12 +11,12 @@ const UploadImage = () => {
     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStickerImage("");
         setLoading(false);
-        const file = e.target.files?.[0]; // 使用可选链操作符 ?. 来安全地访问属性
+        const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const dataURL = reader.result as string;
-                setSelectedImage(dataURL); // 将 Data URL 设置为状态
+                setSelectedImage(dataURL);
                 e.target.value = "";
             };
             reader.readAsDataURL(file);
@@ -26,12 +25,12 @@ const UploadImage = () => {
     
 
     return (
-        <div className="flex flex-col items-center justify-center h-64 w-2/5 mt-10">
+        <div className="flex flex-col items-center justify-center h-80 w-2/5 mt-10 mb-10"> {/* Adjusted margin-top here */}
             {!selectedImage ? (
                 <>
                     <label
                         htmlFor="fileInput"
-                        className="border-2 border-orange-300 h-40 w-full border-dashed rounded-lg flex py-4 flex-col justify-center items-center text-center cursor-pointer"
+                        className="border-2 border-orange-300 h-40 w-full border-dashed rounded-lg flex py-4 flex-col justify-center items-center text-center cursor-pointer mt-4 mb-4" 
                     >
                         <span className="text-lg font-semibold">
                             Drag & Drop or Click to Upload
@@ -44,8 +43,8 @@ const UploadImage = () => {
                         className="w-24 h-auto"
                         src={selectedImage}
                         alt="Uploaded"
-                        width={230}
-                        height={230}
+                        width={100}
+                        height={100}
                       />  
                 
             )}
@@ -70,3 +69,4 @@ const UploadImage = () => {
 };
 
 export default UploadImage;
+
