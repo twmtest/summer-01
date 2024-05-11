@@ -34,6 +34,6 @@ export async function GET(req: NextRequest, res: NextApiResponse){
        
        return NextResponse.json({ images });
     }catch(error){
-        return NextResponse.error
+        console.log('Error get image',error)
     }
 }
