@@ -1,37 +1,54 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# 忽略node_modules目录
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
+# 忽略日志文件
+*.log
 
-# testing
-/coverage
+# 忽略临时文件
+*.tmp
+*.temp
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
+# 忽略操作系统生成的文件
 .DS_Store
-*.pem
+Thumbs.db
 
-# debug
+# 忽略编译输出目录（例如dist或build）
+dist/
+build/
+
+# 忽略环境变量配置文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 忽略IDE和编辑器的配置文件
+.idea/
+.vscode/
+
+# 忽略npm调试日志
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
+# 忽略TypeScript的类型定义缓存
 *.tsbuildinfo
-next-env.d.ts
+
+# 忽略eslint缓存
+.eslintcache
+
+# 忽略公共配置文件
+config/
+
+# Ignore all files in the prisma directory
+prisma/*
+
+# But keep the schema.prisma file
+!prisma/schema.prisma
+
+# Ignore the .env file in the prisma directory
+prisma/.env
+
+.git
+.next

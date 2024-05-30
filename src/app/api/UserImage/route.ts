@@ -14,6 +14,7 @@ export async function GET(req: NextRequest, res: NextApiResponse){
                 userId
             },
             select: {
+                id:true,
                 imageUrl: true,
                 imageName: true,
             },
