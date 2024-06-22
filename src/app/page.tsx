@@ -9,6 +9,7 @@ import SearchProvider from "@/app/context/search-provider";
 import { useState, useEffect } from 'react';
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 
+
 interface Image {
   imageUrl: string;
   imageName: string;
@@ -49,7 +50,7 @@ const Cell: React.FC<CellProps> = ({ columnIndex, rowIndex, style, data }) => {
 
 export default function Home() {
   const [images, setImages] = useState<Image[]>([]);
-
+  
   useEffect(() => {
     const getImages = async () => {
       try {
@@ -84,13 +85,13 @@ export default function Home() {
           <div className="mb-20 mt-12 text-center">
             <div className="mb-3 flex items-center">
               <Image
-                src="/favicon.ico"
+                src="/StickerSprout.jpg"
                 width={36}
-                height={36}
-                className="h-9 w-9"
+                height={38}
+                className="mr-3"
                 alt="StickerBaker icon"
               />
-              <p className="font-bold text-3xl text-orange-500 font-brand">StickerBaker</p>
+              <p className="font-bold text-3xl text-orange-500 font-brand">StickerSprout</p>
             </div>
           </div>
           <SearchProvider>

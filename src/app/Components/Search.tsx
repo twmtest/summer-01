@@ -3,25 +3,52 @@ import { useState, useContext } from 'react';
 import Image from "next/image";
 import axios from 'axios';
 import { SearchContext } from '../context/search-provider';
-import prisma from "@/app/lib/db";
 import { useSession } from 'next-auth/react';
-import Router from "next/router"
+import Router from "next/router";
 
 const Search = () => {
     const { data: session, status } = useSession();
     const [inputValue, setInputValue] = useState('');
     const { selectedImage, setSelectedImage, stickerImage, setStickerImage, loading, setLoading } = useContext(SearchContext);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // 处理提交逻辑
         if (session) {
             await MakeSticker();
         } else {
-            Router.push({pathname: '/Login', query: {}})
+            Router.push({ pathname: '/Login', query: {} });
+        }
+    };
+
+    const MakeSticker = async () => {
+        try {
+            const prompt = inputValue;
+            const image = selectedImage;
+            if (!image) {
+                console.error('No image selected');
+                return;
+            }
+            setLoading(true);
+            setInputValue('');
+            setSelectedImage("");
+
+            const makestickerresponse = await axios.post('https://ai-sticker-sprout-node.vercel.app/api/makesticker', { image, prompt }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log('Sticker created successfully:', makestickerresponse.data[0]);
+            setStickerImage(makestickerresponse.data[0]);
+            await uploadImage(makestickerresponse.data[0]);
+        } catch (error) {
+            console.error('Error creating sticker:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -29,13 +56,17 @@ const Search = () => {
         if (image) {
             try {
                 const prompt = inputValue;
-                const response1 = await axios.post('http://localhost:5000/uploadImage', { image ,prompt});
+                const response1 = await axios.post('https://ai-sticker-sprout-node.vercel.app/api/uploadImage', { image, prompt }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
                 console.log('Image uploaded successfully:', response1.data.result);
-                const {uploaded, variants ,meta} = response1.data.result;
+                const { uploaded, variants, meta } = response1.data.result;
+
                 if (session?.user && session.user?.sub && response1.data.result) {
-
                     const userId = session.user.sub;
-
 
                     const res = await fetch(`/api/UploadImage`, {
                         method: "POST",
@@ -44,49 +75,21 @@ const Search = () => {
                         },
                         body: JSON.stringify({
                             userId,
-                            filename:meta.filename,
+                            filename: meta.filename,
                             uploaded,
                             variants
                         }),
                     });
 
-
                     console.log('Image data inserted successfully:', res);
                 } else {
                     console.error('User not authenticated');
                 }
-            } catch (error:any) {
+            } catch (error: any) {
                 console.error('Error uploading image:', error);
             }
         } else {
             console.error('No image selected');
-        }
-    };
-
-    const MakeSticker = async () => {
-        try {
-
-
-            const prompt = inputValue;
-            const image = selectedImage;
-            // 检查是否选择了图片
-            if (!selectedImage) {
-                console.error('No image selected');
-                return;
-            }
-            setLoading(true);
-            setInputValue('');
-            setSelectedImage("");
-
-            const makestickerresponse = await axios.post('http://localhost:5000/makesticker', { image, prompt });
-
-
-            console.log('Sticker created successfully:', makestickerresponse.data[0]);
-            setStickerImage(makestickerresponse.data[0])
-            uploadImage(makestickerresponse.data[0]);
-
-        } catch (error) {
-            console.error('Error creating sticker:', error);
         }
     };
 
