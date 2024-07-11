@@ -94,8 +94,8 @@ const Search = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-1/2 mt-4">
-            <div className="flex items-center justify-center w-full ml-12">
+        <form onSubmit={handleSubmit} className="w-full sm:w-1/2 mt-4">
+            <div className="flex items-center justify-center w-full sm:ml-12">
                 <div className="relative w-full">
                     <input
                         type="text"
@@ -109,7 +109,7 @@ const Search = () => {
                 </div>
                 <button
                     type="submit"
-                    className={`inline-flex items-center justify-center ml-2 border rounded-lg bg-white group hover:bg-orange-50 text-zinc-900 hover:text-orange-700 px-4 py-2.5 font-bold self-end ${!session && 'cursor-not-allowed opacity-50'}`} // 添加条件样式
+                    className={`inline-flex items-center justify-center ml-2 border rounded-lg bg-white group hover:bg-orange-50 text-zinc-900 hover:text-orange-700 px-4 py-2.5 font-bold ${!session && 'cursor-not-allowed opacity-50'}`} // 添加条件样式
                     disabled={!session} // 禁用按钮
                 >
                     <Image

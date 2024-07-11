@@ -25,7 +25,7 @@ const UploadImage = () => {
     
 
     return (
-        <div className="flex flex-col items-center justify-center h-80 w-2/5 mt-10 mb-10"> {/* Adjusted margin-top here */}
+        <div className="flex flex-col items-center justify-center h-80 w-full sm:w-2/5 mt-10 mb-10"> {/* Adjusted margin-top here */}
             {!selectedImage ? (
                 <>
                     <label
@@ -69,4 +69,3 @@ const UploadImage = () => {
 };
 
 export default UploadImage;
-
