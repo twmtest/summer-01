@@ -82,7 +82,7 @@ export default function Home() {
 
   const columnCount = windowWidth >= 1024 ? 4 : windowWidth >= 768 ? 2 : 2;
   const rowCount = Math.ceil(images.length / columnCount);
-
+  
   return (
     <main className='px-4 py-6 sm:px-6 lg:px-8'>
       <div className='mx-auto max-w-7xl'>
@@ -109,6 +109,7 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex justify-center w-full overflow-hidden"> {/* 添加 overflow-hidden 确保没有滚动条 */}
+            
             <Grid
               columnCount={columnCount}
               columnWidth={windowWidth >= 1024 ? 250 : windowWidth >= 768 ? 300 : 160}
