@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -85,8 +85,8 @@ export default function Page() {
   return (
     <main className="px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="flex min-h-screen">
-          <div className="w-2/3 p-4">
+        <div className="flex flex-col md:flex-row min-h-screen">
+          <div className="md:w-2/3 p-4 mb-4 md:mb-0 text-center">
             <h1 className="text-lg font-semibold leading-8 text-zinc-800 mb-4">
               {image ? image.imageName : 'Loading...'}
             </h1>
@@ -97,11 +97,11 @@ export default function Page() {
                   alt={image.imageName}
                   width={500}
                   height={500}
-                  className="rounded-lg"
+                  className="rounded-lg mx-auto"
                   priority
                 />
                 <button
-                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-80"
+                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                   onClick={handleDownload}
                 >
                   Download
@@ -109,8 +109,8 @@ export default function Page() {
               </div>
             )}
           </div>
-          <div className="w-1/3 p-4">
-            <h2 className="text-lg font-semibold leading-8 text-zinc-800 mb-4">
+          <div className="md:w-1/3 p-4">
+            <h2 className="text-lg font-semibold leading-8 text-zinc-800 mb-4 text-center md:text-left">
               Similar Images
             </h2>
             <div className="grid grid-cols-2 gap-4">

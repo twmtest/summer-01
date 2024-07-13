@@ -49,6 +49,7 @@ const Cell: React.FC<CellProps> = ({ columnIndex, rowIndex, style, data }) => {
 export default function Home() {
   const [images, setImages] = useState<Image[]>([]);
   const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1000);
+  const [windowHeight, setWindowHeight] = useState<number>(typeof window !== 'undefined' ? window.innerHeight : 800);
 
   useEffect(() => {
     const getImages = async () => {
@@ -75,12 +76,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const columnCount = windowWidth >= 1024 ? 4 : windowWidth >= 768 ? 2 : 2;
+  const columnCount = windowWidth >= 1024 ? 4 : windowWidth >= 768 ? 3 : 2;
+  const columnWidth = windowWidth >= 1024 ? 250 : windowWidth >= 768 ? 300 : 160;
   const rowCount = Math.ceil(images.length / columnCount);
   
   return (
@@ -108,19 +113,20 @@ export default function Home() {
               Latest
             </h1>
           </div>
-          <div className="flex justify-center w-full overflow-hidden"> {/* 添加 overflow-hidden 确保没有滚动条 */}
-            
-            <Grid
-              columnCount={columnCount}
-              columnWidth={windowWidth >= 1024 ? 250 : windowWidth >= 768 ? 300 : 160}
-              height={window.innerHeight - 200} // 动态调整高度，使其适应视口高度，避免滚动条
-              rowCount={rowCount}
-              rowHeight={300}
-              width={Math.min(windowWidth - 32, columnCount * (windowWidth >= 1024 ? 250 : windowWidth >= 768 ? 300 : 160))}
-              itemData={{ images, columnCount }}
-            >
-              {Cell}
-            </Grid>
+          <div className="flex justify-center w-full overflow-hidden"> 
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              <Grid
+                columnCount={columnCount}
+                columnWidth={columnWidth}
+                height={windowHeight - 200} 
+                rowCount={rowCount}
+                rowHeight={300}
+                width={columnCount * columnWidth}
+                itemData={{ images, columnCount }}
+              >
+                {Cell}
+              </Grid>
+            </div>
           </div>
         </div>
       </div>
